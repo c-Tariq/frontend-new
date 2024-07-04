@@ -1,43 +1,35 @@
 name: Deploy
 
-on:
-  push:
-    branches:
-      - main
+on: [workflow_dispatch]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build React App
-        run: npm run build
-        env:
-          HTTPS: 'true'
-          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
-          PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+    - name: Setup node 12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 11.9.0
+        
+    - name: Git Checkout
+      uses: actions/checkout@v2
+        
+    - name: Yarn Cache
+      uses: c-hive/gha-yarn-cache@v1
+        
+    - name: Install dependencies
+      run: yarn
+        
+    - name: Build React App
+      run: yarn build
+      env:
+        HTTPS: 'true'
+        REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+        PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
