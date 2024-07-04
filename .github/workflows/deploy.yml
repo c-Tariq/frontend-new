@@ -6,20 +6,20 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3 # Updated to the latest version
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js 20
-        uses: actions/setup-node@v3 # Updated to the latest version
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
 
       - name: Cache Node.js modules
-        uses: actions/cache@v3 # Using actions/cache instead of c-hive/gha-yarn-cache
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -27,10 +27,14 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
 
-      - name: Build project
-        run: yarn build
+      - name: Build React App
+        run: npm run build
+        env:
+          HTTPS: 'true'
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+          PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
