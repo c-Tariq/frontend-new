@@ -5,12 +5,12 @@ on: [workflow_dispatch]
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Setup node 12
+    - name: Setup Node 20
       uses: actions/setup-node@v1
       with:
-        node-version: 11.9.0
+        node-version: 20
         
     - name: Git Checkout
       uses: actions/checkout@v2
