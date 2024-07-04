@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "http://c-Tariq.github.io/frontend-new/static/css/main.985582f7.css",
+    "main.js": "http://c-Tariq.github.io/frontend-new/static/js/main.8b661c1e.js",
+    "index.html": "http://c-Tariq.github.io/frontend-new/index.html",
+    "main.985582f7.css.map": "http://c-Tariq.github.io/frontend-new/static/css/main.985582f7.css.map",
+    "main.8b661c1e.js.map": "http://c-Tariq.github.io/frontend-new/static/js/main.8b661c1e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.985582f7.css",
+    "static/js/main.8b661c1e.js"
+  ]
+}
