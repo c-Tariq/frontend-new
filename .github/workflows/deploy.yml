@@ -9,6 +9,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for .GitInfo and .Lastmod
 
     - name: Setup Node 20
       uses: actions/setup-node@v4
@@ -16,7 +18,7 @@ jobs:
         node-version: 20
         
     - name: Cache dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4  # Update to v4
       with:
         path: ~/.cache/yarn
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
